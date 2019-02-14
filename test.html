@@ -8,9 +8,9 @@
 (function($) {
     $(function() {
         window.fs_test = $('.test').fSelect({
-            placeholder: '筛选标签',
+            placeholder: 'Select some options',
             numDisplayed: 3,
-            overflowText: '{n} 个标签被选中',
+            overflowText: '{n} selected',
             noResultsText: 'No results found',
             searchText: 'Search',
             showSearch: true,
@@ -21,6 +21,7 @@
 
                 return true;
             },
+            
             inactiveRecall: function() {
                 console.log('inactiveRecall');
                 alert('inactiveRecall');

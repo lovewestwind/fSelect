@@ -18,7 +18,21 @@ $('.your-select').fSelect({
     overflowText: '{n} selected',
     noResultsText: 'No results found',
     searchText: 'Search',
-    showSearch: true
+    showSearch: true,
+    showConfirm: true,
+    activeRecall: function() {
+        console.log('activeRecall');
+        alert('activeRecall');
+
+        return true;
+    },
+    
+    inactiveRecall: function() {
+        console.log('inactiveRecall');
+        alert('inactiveRecall');
+
+        return true;
+    }
 });
 ```
 
