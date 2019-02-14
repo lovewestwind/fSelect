@@ -62,6 +62,14 @@
     width: 100%;
 }
 
+.fs-confirm {
+    text-align: center;
+}
+
+.fs-confirm button {
+    margin: 5px 10px;
+}
+
 .fs-option,
 .fs-search,
 .fs-optgroup-label {

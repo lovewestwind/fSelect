@@ -33,7 +33,12 @@
                 searchText: 'Search',
                 noResultsText: 'No results found',
                 showSearch: true,
-                optionFormatter: false
+                optionFormatter: false,
+                showConfirm: false,
+                activeText: 'Confirm',
+                inactiveText: 'Cancel',
+                activeRecall: function(){ return false; },
+                inactiveRecall: function(){ return true; }
             }, options);
         }
 
@@ -61,18 +66,28 @@
                 var search_html = '';
                 var no_results_html = '';
                 var choices_html = this.buildOptions(this.$select);
+                var confirm_html = '';
 
                 if (this.settings.showSearch) {
                     search_html = '<div class="fs-search"><input type="search" placeholder="' + this.settings.searchText + '" /></div>';
                 }
+
+                if (this.settings.showConfirm) {
+                    confirm_html = '<div class="fs-confirm">' +
+                    '<button type="button" id="fsActive" class="btn btn-default">' + this.settings.activeText + '</button>' + 
+                    '<button type="button" id="fsInactive" class="btn btn-default">' + this.settings.inactiveText + '</button>' + 
+                    '</div>';
+                }
+
                 if ('' !== this.settings.noResultsText) {
                     no_results_html = '<div class="fs-no-results hidden">' + this.settings.noResultsText + '</div>';
                 }
 
                 var html = '<div class="fs-label-wrap"><div class="fs-label"></div><span class="fs-arrow"></span></div>';
-                html += '<div class="fs-dropdown hidden">{search}{no-results}<div class="fs-options">' + choices_html + '</div></div>';
+                html += '<div class="fs-dropdown hidden">{search}{no-results}<div class="fs-options">' + choices_html + '</div>{confirm}</div>';
                 html = html.replace('{search}', search_html);
                 html = html.replace('{no-results}', no_results_html);
+                html = html.replace('{confirm}', confirm_html);
 
                 this.$select.wrap('<div class="fs-wrap' + (this.settings.multiple ? ' multiple' : '') + '" tabindex="0" />');
                 this.$select.addClass('hidden');
@@ -82,6 +97,7 @@
                 window.fSelect.num_items++;
 
                 this.reloadDropdownLabel();
+                this.bindEvents();
             },
 
             reload: function() {
@@ -153,6 +169,21 @@
                 this.$wrap.find('.fs-label').html(labelText);
                 this.$wrap.toggleClass('fs-default', labelText === settings.placeholder);
                 this.$select.change();
+            },
+
+            bindEvents: function() {
+                var settings = this.settings;
+                $('.fs-confirm #fsActive').on('click', function(e) {
+                    if (settings.activeRecall(e)) {
+                        closeDropdown();
+                    }
+                });
+
+                $('.fs-confirm #fsInactive').on('click', function(e) {
+                    if (settings.inactiveRecall(e)) {
+                        closeDropdown();
+                    }
+                });
             }
         }
 

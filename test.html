@@ -7,7 +7,27 @@
 <script>
 (function($) {
     $(function() {
-        window.fs_test = $('.test').fSelect();
+        window.fs_test = $('.test').fSelect({
+            placeholder: '筛选标签',
+            numDisplayed: 3,
+            overflowText: '{n} 个标签被选中',
+            noResultsText: 'No results found',
+            searchText: 'Search',
+            showSearch: true,
+            showConfirm: true,
+            activeRecall: function() {
+                console.log('activeRecall');
+                alert('activeRecall');
+
+                return true;
+            },
+            inactiveRecall: function() {
+                console.log('inactiveRecall');
+                alert('inactiveRecall');
+
+                return true;
+            }
+        });
     });
 })(jQuery);
 </script>
